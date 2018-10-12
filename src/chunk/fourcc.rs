@@ -35,7 +35,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "called `Option::unwrap()` on a `None` value")]
     fn create_new_too_short() {
-    	let fourcc = FourCC::new("ABC");
+    	let _fourcc = FourCC::new("ABC");
     }
     #[test]
     fn should_return_fourcc_as_str() {
