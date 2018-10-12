@@ -6,4 +6,4 @@ authors = ["Arttu Valo <arttu.valo@gmail.com>"]
 [dependencies]
 
 [dev-dependencies]
-cargo-kcov = "0.5.1"
+pretty_assertions = "0.5.1"

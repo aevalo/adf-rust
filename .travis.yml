@@ -13,10 +13,11 @@ matrix:
 cache: cargo
 
 script:
-  - cargo build --verbose
+  - cargo install cargo-kcov
   - cargo check --verbose
   - cargo test --verbose
   - cargo kcov --verbose
+  - cargo build --verbose
 
 env:
   - CODECOV_TOKEN="b367470e-4733-49aa-931d-ecbf28bcf838"
