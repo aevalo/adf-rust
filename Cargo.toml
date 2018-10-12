@@ -1,0 +1,6 @@
+[package]
+name = "adf"
+version = "0.1.0"
+authors = ["Arttu Valo <arttu.valo@gmail.com>"]
+
+[dependencies]
