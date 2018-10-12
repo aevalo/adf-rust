@@ -1,6 +1,7 @@
 # adf-rust
 
 ![Image](https://api.travis-ci.org/aevalo/adf-rust.svg?branch=master "Build status")
+[![codecov](https://codecov.io/gh/aevalo/adf-rust/branch/master/graph/badge.svg)](https://codecov.io/gh/aevalo/adf-rust)
 
 ## Crate for doing IO on ADF-formatted files
 
