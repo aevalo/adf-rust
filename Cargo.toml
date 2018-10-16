@@ -4,6 +4,11 @@ version = "0.1.0"
 authors = ["Arttu Valo <arttu.valo@gmail.com>"]
 
 [dependencies]
+byteorder = "1.2.6"
+directories = "1.0.2"
+log = "0.4.5"
+serde = "1.0.80"
+toml = "0.4.8"
 
 [dev-dependencies]
 pretty_assertions = "0.5.1"
