@@ -4,9 +4,8 @@
 use std::vec::Vec;
 use std::str::{self, FromStr};
 
-
-mod fourcc;
-use self::fourcc::{FourCC, FourCCParseError};
+pub mod fourcc;
+use self::fourcc::FourCC;
 
 #[derive(Debug)]
 pub struct Chunk {
@@ -15,7 +14,6 @@ pub struct Chunk {
 }
 
 impl Chunk {
-
     /// Create new empty chunk.
     ///
     /// # Examples

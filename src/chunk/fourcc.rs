@@ -1,3 +1,6 @@
+/// # fourcc
+///
+/// `fourcc` provides utility methods for managing data chunks.
 
 use std::fmt;
 use std::str::{self, FromStr};
@@ -18,7 +21,6 @@ use serde::{de, ser};
 ///
 /// Some FourCCs however, do contain non-printable characters, and are not human-readable without
 /// special formatting for display.
-
 #[derive(PartialEq, Clone)]
 pub struct FourCC {
     value: [u8; 4]
@@ -32,6 +34,15 @@ pub struct FourCCParseError {
 
 impl FromStr for FourCC {
     type Err = FourCCParseError;
+    /// Create new FourCC object from string.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use adf::chunk::Chunk;
+    ///
+    /// let chunk = Chunk::new("CHNK");
+    /// ```
     fn from_str(id: &str) -> Result<FourCC, FourCCParseError> {
         if id.len() < 4 {
             return Err(FourCCParseError { _reason: String::from("given FourCC too short") })
