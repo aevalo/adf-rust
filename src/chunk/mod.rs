@@ -2,9 +2,8 @@
 ///
 /// `chunk` provides utility methods for managing data chunks.
 use std::vec::Vec;
-use std::str::{self, FromStr};
 
-pub mod fourcc;
+mod fourcc;
 use self::fourcc::FourCC;
 
 #[derive(Debug)]
@@ -25,7 +24,7 @@ impl Chunk {
     /// ```
     pub fn new(id: &str) -> Chunk {
         Chunk {
-            id: FourCC::from_str(id).unwrap(),
+            id: id.parse().unwrap(),
             content: Vec::new(),
         }
     }
@@ -41,7 +40,7 @@ impl Chunk {
     /// ```
     pub fn with_capacity(id: &str, capacity: usize) -> Chunk {
         Chunk {
-            id: fourcc::FourCC::from_str(id).unwrap(),
+            id: id.parse().unwrap(),
             content: Vec::with_capacity(capacity),
         }
     }
@@ -54,16 +53,25 @@ mod tests {
     #[test]
     fn create_new() {
         let chunk = Chunk::new("TEST");
-        //assert_eq!("TEST", chunk.id.to_str());
+        assert_eq!("TEST", format!("{}", chunk.id));
         assert_eq!(0, chunk.content.len());
         assert_eq!(0, chunk.content.capacity());
     }
-
+    #[test]
+    #[should_panic(expected = "given FourCC too short")]
+    fn create_new_panic() {
+        let _chunk = Chunk::new("TST");
+    }
     #[test]
     fn create_new_with_capacity() {
         let chunk = Chunk::with_capacity("TEST", 10);
-        //assert_eq!("TEST", chunk.id.to_str());
+        assert_eq!("TEST", format!("{}", chunk.id));
         assert_eq!(0, chunk.content.len());
         assert_eq!(10, chunk.content.capacity());
+    }
+    #[test]
+    #[should_panic(expected = "given FourCC too long")]
+    fn create_new_with_capacity_panic() {
+        let _chunk = Chunk::with_capacity("TESTID", 10);
     }
 }

@@ -26,6 +26,16 @@ pub struct FourCC {
     value: [u8; 4]
 }
 
+impl FourCC {
+    /// Create new FourCC from a string.
+    pub fn new(id: &str) -> FourCC {
+        match id.parse() {
+            Ok(fourcc) => fourcc,
+            Err(err) => panic!("{}", err)
+        }
+    }
+}
+
 /// Error returned from parsing a `FourCC` in the `FromStr` implementation.
 #[derive(Debug, Clone)]
 pub struct FourCCParseError {
@@ -35,14 +45,6 @@ pub struct FourCCParseError {
 impl FromStr for FourCC {
     type Err = FourCCParseError;
     /// Create new FourCC object from string.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use adf::chunk::Chunk;
-    ///
-    /// let chunk = Chunk::new("CHNK");
-    /// ```
     fn from_str(id: &str) -> Result<FourCC, FourCCParseError> {
         if id.len() < 4 {
             return Err(FourCCParseError { _reason: String::from("given FourCC too short") })
@@ -93,7 +95,25 @@ mod tests {
 
     #[test]
     fn create_new() {
-        let fourcc = FourCC::from_str("ABCD").unwrap();
+    let fourcc = FourCC::new("ABCD");
+    assert_eq!(fourcc.value[0], b'A');
+    assert_eq!(fourcc.value[1], b'B');
+    assert_eq!(fourcc.value[2], b'C');
+    assert_eq!(fourcc.value[3], b'D');
+    }
+    #[test]
+    #[should_panic(expected = "given FourCC too short")]
+    fn create_new_too_short() {
+    let _fourcc = FourCC::new("ABC");
+    }
+    #[test]
+    #[should_panic(expected = "given FourCC too long")]
+    fn create_new_too_long() {
+        let _fourcc = FourCC::new("ABCDE");
+    }
+    #[test]
+    fn create_from_string() {
+        let fourcc: FourCC = "ABCD".parse().unwrap();
         assert_eq!(fourcc.value[0], b'A');
         assert_eq!(fourcc.value[1], b'B');
         assert_eq!(fourcc.value[2], b'C');
@@ -101,13 +121,13 @@ mod tests {
     }
     #[test]
     #[should_panic(expected = "given FourCC too short")]
-    fn create_new_too_short() {
-        let _fourcc = FourCC::from_str("ABC").unwrap();
+    fn create_from_string_too_short() {
+        let _fourcc: FourCC = "ABC".parse().unwrap();
     }
     #[test]
     #[should_panic(expected = "given FourCC too long")]
-    fn create_new_too_long() {
-        let _fourcc = FourCC::from_str("ABCDE").unwrap();
+    fn create_from_string_too_long() {
+        let _fourcc: FourCC = "ABCDE".parse().unwrap();
     }
     #[test]
     fn should_return_fourcc_as_str() {
